@@ -22,7 +22,14 @@ export async function middleware(req: NextRequest) {
 
   console.log("AUTH_SECRET", process.env.AUTH_SECRET);
   console.log(req);
-  const token = await getToken({ req, secret: process.env.AUTH_SECRET });
+  const nextAuthUrl = process.env.NEXTAUTH_URL ?? "";
+  const isProductionUsemeaning =
+    nextAuthUrl.startsWith("https://") && nextAuthUrl.includes("usemeaning.io");
+  const token = await getToken({
+    req,
+    secret: process.env.AUTH_SECRET,
+    secureCookie: isProductionUsemeaning,
+  });
 
   console.log("token", token);
   if (!token) {
