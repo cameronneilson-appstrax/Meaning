@@ -20,8 +20,11 @@ export async function middleware(req: NextRequest) {
   const needsAuth = PROTECTED_PAGES.some((p) => pathname.startsWith(p));
   if (!needsAuth) return NextResponse.next();
 
+  console.log("AUTH_SECRET", process.env.AUTH_SECRET);
+  console.log(req);
   const token = await getToken({ req, secret: process.env.AUTH_SECRET });
 
+  console.log("token", token);
   if (!token) {
     const loginUrl = new URL("/login", req.url);
     if (pathname.startsWith("/connect-analytics")) {

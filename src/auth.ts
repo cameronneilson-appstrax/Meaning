@@ -51,6 +51,7 @@ const cookieDomain =
       : isProductionUsemeaning
         ? ".usemeaning.io"
         : undefined;
+console.log("cookieDomain", cookieDomain);
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: PrismaAdapter(prisma),
